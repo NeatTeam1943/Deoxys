@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <iostram>
 #include <frc/TimedRobot.h>
 #include <frc/commands/Command.h>
 #include <frc/smartdashboard/SendableChooser.h>
@@ -15,11 +16,16 @@
 #include "subsystems/Chassis.h"
 #include "subsystems/Intake.h"
 #include "subsystems/Conveyor.h"
+#include "networktables/NetworkTable.h"
+#incldue "networktables/NetworkTableInstance.h"
+
+using namespace std;
 
 class OI;
 class Chassis;
 class Intake;
 class Conveyor;
+class NetworkTableSub;
 
 class Robot : public frc::TimedRobot {
  public:
@@ -27,6 +33,11 @@ class Robot : public frc::TimedRobot {
   static Chassis m_chassis;
   static Intake m_intake;
   static Conveyor m_conveyor;
+  static NetworkTableSub m_nt;
+  static std::shared_ptr<NetworkTable> table;
+
+  nt::NetworkTableInstance instance;
+
   double cur_distance;
 
   void RobotInit() override;

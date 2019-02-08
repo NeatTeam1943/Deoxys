@@ -14,6 +14,8 @@ OI Robot::m_oi;
 Chassis Robot::m_chassis;
 Intake Robot::m_intake;
 Conveyor Robot::m_conveyor;
+NetworkTableSub Robot::m_nt;
+std::shared_ptr<NetworkTable> Robot::table;
 
 BuiltInAccelerometer accelerometer;
 
@@ -22,6 +24,9 @@ double cur_distance;
 void Robot::RobotInit() {
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
   this->cur_distance = 0;
+
+  this->instance = nt::NetworkTableInstance::GetDefault();  // required to get the network table
+  table = this->instance.GetTable("ImageProcessing");  // set table equal to our network table named ImageProcessing
 }
 
 /**
