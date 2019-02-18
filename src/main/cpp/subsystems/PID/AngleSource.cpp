@@ -7,17 +7,22 @@
 
 #include "subsystems/PID/AngleSource.h"
 
-AngleSource::AngleSource() {
+AngleSource::AngleSource()
+{
 }
 
-double AngleSource::PIDGet() {
-    return Robot::m_chassis.GetNavxAngle();
+double AngleSource::PIDGet()
+{
+    return Robot::m_chassis.GetNavx()->GetYaw();
+    //return Robot::table->GetEntry("alpha").GetDouble(0);
 }
 
-void AngleSource::SetPIDSourceType(PIDSourceType pidSource) {
+void AngleSource::SetPIDSourceType(PIDSourceType pidSource)
+{
     this->m_pidSource = pidSource;
 }
 
-PIDSourceType AngleSource::GetPIDSourceType() const {
+PIDSourceType AngleSource::GetPIDSourceType() const
+{
     return this->m_pidSource;
 }

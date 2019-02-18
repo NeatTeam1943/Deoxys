@@ -18,12 +18,13 @@
     (bool)   squared -> is Squared - drive slower (true/false)
 */
 
-class Drive : public frc::Command {
+class Drive : public frc::Command
+{
   private:
     double mag;
     double rot;
     bool squared;
-  
+
   public:
     Drive(double mag, double rot, bool squared);
     void Initialize() override;

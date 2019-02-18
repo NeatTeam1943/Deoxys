@@ -19,9 +19,10 @@ using namespace frc;
     (Joystick*) stick -> surprise surprise - it is the god damn joystick.
 */
 
-class DriveByJoystick : public frc::Command {
+class DriveByJoystick : public frc::Command
+{
   private:
-    Joystick* stick;
+    Joystick *stick;
 
   public:
     DriveByJoystick();

@@ -7,27 +7,32 @@
 
 #pragma once
 
-#include "RobotMap.h"
-
 #include "Robot.h"
 using namespace frc;
 #include <frc/WPILib.h>
+#include "RobotMap.h"
 
 #include "commands/Chassis/Drive.h"
 #include "commands/Chassis/DriveByJoystick.h"
-#include "commands/Chassis/DriveAutonomous.h"
+#include "commands/Autonomous/DriveAutonomous.h"
 #include "commands/Chassis/ResetNavX.h"
 #include "commands/Chassis/DriveStraight.h"
 #include "commands/Intake/Lift.h"
 #include "commands/Intake/Roll.h"
 #include "commands/Conveyor/Launch.h"
+#include "commands/Climber/Climb.h"
+#include "commands/Vision/GetData.h"
+#include "commands/Autonomous/Rotate.h"
+#include "commands/Autonomous/Load.h"
+#include "commands/Climber/ChangeCompressor.h"
 
-class OI {
+class OI
+{
   private:
-    Joystick* stick;
-    JoystickButton* buttons[10];
+    Joystick *stick;
+    JoystickButton *buttons[10];
 
   public:
     OI();
-    Joystick* GetStick();
+    Joystick *GetStick();
 };

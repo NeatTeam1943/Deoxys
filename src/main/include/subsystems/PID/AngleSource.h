@@ -11,11 +11,13 @@
 using namespace frc;
 #include <frc/WPILib.h>
 #include "../../Robot.h"
+#include "../Vision.h"
 
-class AngleSource : public PIDSource {
- public:
-  AngleSource();
-  double PIDGet();
-  void SetPIDSourceType(PIDSourceType pidSource);
-  PIDSourceType GetPIDSourceType() const;
+class AngleSource : public PIDSource
+{
+  public:
+    AngleSource();
+    double PIDGet();
+    void SetPIDSourceType(PIDSourceType pidSource);
+    PIDSourceType GetPIDSourceType() const;
 };

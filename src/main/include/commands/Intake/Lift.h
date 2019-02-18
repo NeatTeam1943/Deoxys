@@ -17,12 +17,13 @@
     (Joystick*) stick -> A stick that contains joy.
 */
 
-class Lift : public frc::Command {
+class Lift : public frc::Command
+{
   private:
-    Joystick* stick;
+    double power;
 
   public:
-    Lift();
+    Lift(double power);
     void Initialize() override;
     void Execute() override;
     bool IsFinished() override;

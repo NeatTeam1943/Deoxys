@@ -7,26 +7,36 @@
 
 #pragma once
 
+// Computer's Ports
 #define JOYTICK_PORT 0
 
-// Ports - to be changed!
+// CAN Ports
 #define CHASSIS_RIGHT_FRONT 5
 #define CHASSIS_RIGHT_REAR 6
-#define CHASSIS_LEFT_FRONT 7
-#define CHASSIS_LEFT_REAR 8
+#define CHASSIS_LEFT_FRONT 3
+#define CHASSIS_LEFT_REAR 4
 
 #define INTAKE_ROLLER 1
 #define INTAKE_LIFT 2
 
-#define CONVEYOR_FIRST 3
-#define CONVEYOR_SECOND 4
+#define CONVEYOR_FIRST 7
+#define CONVEYOR_SECOND 8
 
+// PWM Ports
+#define CAMERA_VERTICAL_SERVO 1
+#define CAMERA_HORIZONTAL_SERVO 0
 
-// Joystick buttons ports
+// PCM Ports
+#define OPEN_PISTON 1
+#define CLOSE_PISTON 0
 
+// DIO Ports
+#define LOADING_SWITCH 1
+
+// Joystick Buttons Ports
 #define BTN_A 0 // Outtake
 #define BTN_B 1 // Intake
-#define BTN_X 2
+#define BTN_X 2 // Open / Close Piston
 #define BTN_Y 3
 #define BTN_BUMPER_L 4 // Shoot slow
 #define BTN_BUMPER_R 5 // Shoot
@@ -35,26 +45,14 @@
 #define BTN_L_STICK 8 // Drive slow
 #define BTN_R_STICK 9 // Reset Camera
 
-#define AXIS_LEFT_X 0 // DO NOT USE!!!
-#define AXIS_LEFT_Y 1 // DO NOT USE!!!
-#define AXIS_LEFT_TRIGGER 2 // Lift down
+// Stick Ports
+#define AXIS_LEFT_X 1        // DO NOT USE!!!
+#define AXIS_LEFT_Y 0        // DO NOT USE!!!
+#define AXIS_LEFT_TRIGGER 2  // Lift down
 #define AXIS_RIGHT_TRIGGER 3 // Lift up
-#define AXIS_RIGHT_X 4 // Camera sides
-#define AXIS_RIGHT_Y 5 // Camera Up/Down
+#define AXIS_RIGHT_X 4       // Camera Horizontal
+#define AXIS_RIGHT_Y 5       // Camera Vertical
 
-/**
- * The RobotMap is a mapping from the ports sensors and actuators are wired into
- * to a variable name. This provides flexibility changing wiring, makes checking
- * the wiring easier and significantly reduces the number of magic numbers
- * floating around.
- */
-
-// For example to map the left and right motors, you could define the
-// following variables to use with your drivetrain subsystem.
-// constexpr int kLeftMotor = 1;
-// constexpr int kRightMotor = 2;
-
-// If you are using multiple modules, make sure to define both the port
-// number and the module. For example you with a rangefinder:
-// constexpr int kRangeFinderPort = 1;
-// constexpr int kRangeFinderModule = 1;
+// Constants
+#define vertical_middle 25
+#define horizontal_middle 85

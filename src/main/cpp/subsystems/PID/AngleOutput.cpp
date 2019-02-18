@@ -7,10 +7,11 @@
 
 #include "subsystems/PID/AngleOutput.h"
 
-AngleOutput::AngleOutput() {
-
+AngleOutput::AngleOutput()
+{
 }
 
-void AngleOutput::PIDWrite(double output) {
+void AngleOutput::PIDWrite(double output)
+{
     Robot::m_chassis.SetAngleOutput(output);
 }

@@ -11,8 +11,9 @@
 using namespace frc;
 #include <frc/WPILib.h>
 
-class AngleOutput : public PIDOutput {
- public:
-  AngleOutput();
-  void PIDWrite(double output);
+class AngleOutput : public PIDOutput
+{
+  public:
+    AngleOutput();
+    void PIDWrite(double output);
 };

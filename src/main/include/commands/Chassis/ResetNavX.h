@@ -15,7 +15,8 @@
     Useful mainly when the game starts.
 */
 
-class ResetNavX : public frc::Command {
+class ResetNavX : public frc::Command
+{
   public:
     ResetNavX();
     void Initialize() override;

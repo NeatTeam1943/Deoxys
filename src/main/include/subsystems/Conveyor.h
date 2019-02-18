@@ -12,6 +12,7 @@
 using namespace frc;
 #include <frc/WPILib.h>
 #include "RobotMap.h"
+#include "ctre/Phoenix.h"
 
 /*
     For functions' documentation, see also "Conveyor.cpp".
@@ -20,16 +21,19 @@ using namespace frc;
                 launcher2 -> launches / shoots / ejects / conveys / whatever Cargo.
 */
 
-class Conveyor : public frc::Subsystem {
+class Conveyor : public frc::Subsystem
+{
   private:
     // It's desirable that everything possible under private except
     // for methods that implement subsystem capabilities
-    VictorSP* launcher1;
-    VictorSP* launcher2;
+    WPI_VictorSPX *launcher1;
+    WPI_VictorSPX *launcher2;
+    DigitalInput *loadingSwitch;
 
   public:
     Conveyor();
     void InitDefaultCommand() override;
     void SetLauncher1(double power);
     void SetLauncher2(double power);
+    bool IsLoaded();
 };

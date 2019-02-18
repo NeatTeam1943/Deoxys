@@ -17,10 +17,11 @@
     (double) power -> power given to roller gripper.
 */
 
-class Roll : public frc::Command {
+class Roll : public frc::Command
+{
   private:
     double power;
-    
+
   public:
     Roll(double power);
     void Initialize() override;

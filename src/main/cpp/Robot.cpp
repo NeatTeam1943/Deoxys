@@ -14,14 +14,22 @@ OI Robot::m_oi;
 Chassis Robot::m_chassis;
 Intake Robot::m_intake;
 Conveyor Robot::m_conveyor;
+Camera Robot::m_camera;
+Climber Robot::m_climber;
+Vision Robot::m_vision;
 
-BuiltInAccelerometer accelerometer;
+std::shared_ptr<NetworkTable> Robot::table;
 
-double cur_distance;
+void Robot::RobotInit()
+{
+    //Robot::m_oi.GetStick()->SetRumble(Robot::m_oi.GetStick()->kRightRumble, 1);
 
-void Robot::RobotInit() {
-  frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
-  this->cur_distance = 0;
+    frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+
+    this->instance = nt::NetworkTableInstance::GetDefault(); // required to get the network table
+    table = this->instance.GetTable("Vision");               // set table equal to our network table named ImageProcessing
+
+    CameraServer::GetInstance()->StartAutomaticCapture();
 }
 
 /**
@@ -32,19 +40,16 @@ void Robot::RobotInit() {
  * <p> This runs after the mode specific periodic functions, but before
  * LiveWindow and SmartDashboard integrated updating.
  */
-void Robot::RobotPeriodic() {
-  frc::SmartDashboard::PutNumber("Yaw", Robot::m_chassis.GetNavx()->GetYaw());
-  frc::SmartDashboard::PutNumber("accel_x", Robot::m_chassis.GetNavx()->GetWorldLinearAccelX() * 9.8);
-  frc::SmartDashboard::PutNumber("accel_y", Robot::m_chassis.GetNavx()->GetWorldLinearAccelY() * 9.8);
-  frc::SmartDashboard::PutNumber("distance", this->cur_distance);
-
-  double accel_x = Robot::m_chassis.GetNavx()->GetWorldLinearAccelX() * 9.8;
-
-  //frc::SmartDashboard::PutBoolean("Is Switch On", Robot::m_chassis.GetSwitchPressed());
-
-  this->cur_distance = this->cur_distance + 0.02 * Robot::m_chassis.GetNavx()->GetVelocityX() + 0.5 * accel_x * 0.02 * 0.02;
-
-  cout << this->cur_distance << endl;
+void Robot::RobotPeriodic()
+{
+    frc::SmartDashboard::PutNumber("Yaw", Robot::m_chassis.GetNavx()->GetYaw());
+    //frc::SmartDashboard::PutNumber("Distance_vision", Robot::m_vision.GetDistance());
+    //frc::SmartDashboard::PutNumber("Alpha_vision", Robot::m_vision.GetAlpha());
+    frc::SmartDashboard::PutBoolean("Is loaded", Robot::m_conveyor.IsLoaded());
+    frc::SmartDashboard::PutNumber("Vertical", Robot::m_camera.GetVertical());
+    frc::SmartDashboard::PutNumber("Horizontal", Robot::m_camera.GetHorizotal());
+    //cout << Robot::m_conveyor.IsLoaded() << endl;
+    //cout << table->GetEntry("alpha").GetDouble(0) << endl;
 }
 
 /**
@@ -67,33 +72,37 @@ void Robot::DisabledPeriodic() { frc::Scheduler::GetInstance()->Run(); }
  * chooser code above (like the commented example) or additional comparisons to
  * the if-else structure below with additional strings & commands.
  */
-void Robot::AutonomousInit() {
-  // std::string autoSelected = frc::SmartDashboard::GetString(
-  //     "Auto Selector", "Default");
-  // if (autoSelected == "My Auto") {
-  //   m_autonomousCommand = &m_myAuto;
-  // } else {
-  //   m_autonomousCommand = &m_defaultAuto;
-  // }
+void Robot::AutonomousInit()
+{
+    // std::string autoSelected = frc::SmartDashboard::GetString(
+    //     "Auto Selector", "Default");
+    // if (autoSelected == "My Auto") {
+    //   m_autonomousCommand = &m_myAuto;
+    // } else {
+    //   m_autonomousCommand = &m_defaultAuto;
+    // }
 
-  m_autonomousCommand = m_chooser.GetSelected();
+    m_autonomousCommand = m_chooser.GetSelected();
 
-  if (m_autonomousCommand != nullptr) {
-    m_autonomousCommand->Start();
-  }
+    if (m_autonomousCommand != nullptr)
+    {
+        m_autonomousCommand->Start();
+    }
 }
 
 void Robot::AutonomousPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
-void Robot::TeleopInit() {
-  // This makes sure that the autonomous stops running when
-  // teleop starts running. If you want the autonomous to
-  // continue until interrupted by another command, remove
-  // this line or comment it out.
-  if (m_autonomousCommand != nullptr) {
-    m_autonomousCommand->Cancel();
-    m_autonomousCommand = nullptr;
-  }
+void Robot::TeleopInit()
+{
+    // This makes sure that the autonomous stops running when
+    // teleop starts running. If you want the autonomous to
+    // continue until interrupted by another command, remove
+    // this line or comment it out.
+    if (m_autonomousCommand != nullptr)
+    {
+        m_autonomousCommand->Cancel();
+        m_autonomousCommand = nullptr;
+    }
 }
 
 void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }
@@ -101,5 +110,8 @@ void Robot::TeleopPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 void Robot::TestPeriodic() {}
 
 #ifndef RUNNING_FRC_TESTS
-int main() { return frc::StartRobot<Robot>(); }
+int main()
+{
+    return frc::StartRobot<Robot>();
+}
 #endif

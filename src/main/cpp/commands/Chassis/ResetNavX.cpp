@@ -7,15 +7,17 @@
 
 #include "commands/Chassis/ResetNavX.h"
 
-ResetNavX::ResetNavX() {
-  // Use Requires() here to declare subsystem dependencies
-  // eg. Requires(Robot::chassis.get());
+ResetNavX::ResetNavX()
+{
+    // Use Requires() here to declare subsystem dependencies
+    // eg. Requires(Robot::chassis.get());
 }
 
 // Called just before this Command runs the first time
-void ResetNavX::Initialize() {
-  Robot::m_chassis.GetNavx()->ResetDisplacement();
-  Robot::m_chassis.GetNavx()->ZeroYaw();
+void ResetNavX::Initialize()
+{
+    Robot::m_chassis.GetNavx()->ResetDisplacement();
+    Robot::m_chassis.GetNavx()->ZeroYaw();
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -25,12 +27,14 @@ void ResetNavX::Execute() {}
 bool ResetNavX::IsFinished() { return true; }
 
 // Called once after isFinished returns true
-void ResetNavX::End() {
+void ResetNavX::End()
+{
     cout << "Reset NavX completed." << endl;
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void ResetNavX::Interrupted() {
-  End();
+void ResetNavX::Interrupted()
+{
+    End();
 }

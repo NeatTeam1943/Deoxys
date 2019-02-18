@@ -7,10 +7,11 @@
 
 #include "subsystems/PID/VelocityOutput.h"
 
-VelocityOutput::VelocityOutput() {
-
+VelocityOutput::VelocityOutput()
+{
 }
 
-void VelocityOutput::PIDWrite(double output) {
+void VelocityOutput::PIDWrite(double output)
+{
     Robot::m_chassis.SetVelocityOutput(output);
 }

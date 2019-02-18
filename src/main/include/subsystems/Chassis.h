@@ -14,6 +14,7 @@ using namespace frc;
 #include "commands/Chassis/DriveByJoystick.h"
 
 #include "AHRS.h"
+#include "ctre/Phoenix.h"
 
 #include "PID/AngleOutput.h"
 #include "PID/AngleSource.h"
@@ -23,7 +24,7 @@ using namespace frc;
 /*
     For functions' documentation, see also "Chassis.cpp".
 
-    (VictorSP*)             right_front
+    (TalonSRX*)             right_front
                             right_rear
                             left_front
                             left_rear
@@ -42,56 +43,56 @@ using namespace frc;
                             velocity        -> Keeps the cur value, controlled by PID Loop.
 */
 
-class Chassis : public frc::Subsystem {
+class Chassis : public frc::Subsystem
+{
   private:
     // It's desirable that everything possible under private except
     // for methods that implement subsystem capabilities
-    VictorSP* right_front;
-    VictorSP* right_rear;
-    VictorSP* left_front;
-    VictorSP* left_rear;
-    SpeedControllerGroup* right;
-    SpeedControllerGroup* left;
-    DifferentialDrive* drive;
+    WPI_TalonSRX *right_front;
+    WPI_TalonSRX *right_rear;
+    WPI_TalonSRX *left_front;
+    WPI_TalonSRX *left_rear;
+    SpeedControllerGroup *right;
+    SpeedControllerGroup *left;
+    DifferentialDrive *drive;
 
-    AHRS* navx;
+    AHRS *navx;
 
-    PIDController* anglePID;
-    PIDSource* angle_source;
-    PIDOutput* angle_output;
+    PIDController *anglePID;
+    PIDSource *angle_source;
+    PIDOutput *angle_output;
     double angle;
 
-    PIDController* velocityPID;
-    PIDSource* velocity_source;
-    PIDOutput* velocity_output;
+    PIDController *velocityPID;
+    PIDSource *velocity_source;
+    PIDOutput *velocity_output;
     double velocity;
 
     // temporary
     DigitalInput *forwardLimitSwitch;
 
-
   public:
     Chassis();
     void InitDefaultCommand() override;
     void Drive(double mag, double rot, bool squared);
-    void Drive(Joystick* stick);
+    void Drive(Joystick *stick);
 
-    AHRS* GetNavx();
+    AHRS *GetNavx();
 
     double GetNavxAngle();
     void SetAngleOutput(double angle);
     double GetAngleOutput();
-    PIDController* GetAnglePIDMode(int mode);
+    PIDController *GetAnglePIDMode(int mode);
     void SetAnglePIDMode(int mode);
-    PIDController* GetAnglePID();
-    
+    PIDController *GetAnglePID();
+
     double GetNavxVelocityX();
     double GetNavxVelocityY();
     double GetNavxVelocity();
     void SetVelocityOutput(double velocity);
     double GetVelocityOutput();
-    PIDController* GetVelocityPID();
-    
+    PIDController *GetVelocityPID();
+
     // temp
     bool GetSwitchPressed();
 };

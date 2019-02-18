@@ -12,10 +12,11 @@ using namespace frc;
 #include <frc/WPILib.h>
 #include "../../Robot.h"
 
-class VelocitySource : public PIDSource {
- public:
-  VelocitySource();
-  double PIDGet();
-  void SetPIDSourceType(PIDSourceType pidSource);
-  PIDSourceType GetPIDSourceType() const;
+class VelocitySource : public PIDSource
+{
+  public:
+    VelocitySource();
+    double PIDGet();
+    void SetPIDSourceType(PIDSourceType pidSource);
+    PIDSourceType GetPIDSourceType() const;
 };

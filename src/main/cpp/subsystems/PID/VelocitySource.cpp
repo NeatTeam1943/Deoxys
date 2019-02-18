@@ -7,17 +7,21 @@
 
 #include "subsystems/PID/VelocitySource.h"
 
-VelocitySource::VelocitySource() {
+VelocitySource::VelocitySource()
+{
 }
 
-double VelocitySource::PIDGet() {
+double VelocitySource::PIDGet()
+{
     return Robot::m_chassis.GetNavxVelocity();
 }
 
-void VelocitySource::SetPIDSourceType(PIDSourceType pidSource) {
+void VelocitySource::SetPIDSourceType(PIDSourceType pidSource)
+{
     this->m_pidSource = pidSource;
 }
 
-PIDSourceType VelocitySource::GetPIDSourceType() const {
+PIDSourceType VelocitySource::GetPIDSourceType() const
+{
     return this->m_pidSource;
 }

@@ -7,17 +7,16 @@
 
 #include "subsystems/Intake.h"
 
-Intake::Intake() : Subsystem("ExampleSubsystem") {
-  this->roller = new VictorSP(INTAKE_ROLLER);
-  this->lift = new VictorSP(INTAKE_LIFT);
+Intake::Intake() : Subsystem("ExampleSubsystem")
+{
+    this->roller = new WPI_TalonSRX(INTAKE_ROLLER);
+    this->lift = new WPI_TalonSRX(INTAKE_LIFT);
 }
 
-void Intake::InitDefaultCommand() {
-  // Set the default command for a subsystem here.
-  // SetDefaultCommand(new MySpecialCommand());
-    //SetDefaultCommand(new Lift());
-  //cout << "init command" << endl;
-  //SetDefaultCommand(new Lift());
+void Intake::InitDefaultCommand()
+{
+    // Set the default command for a subsystem here.
+    SetDefaultCommand(new LiftByJoystick());
 }
 
 // Put methods for controlling this subsystem
@@ -25,10 +24,10 @@ void Intake::InitDefaultCommand() {
 
 void Intake::SetRoller(double power)
 {
-  this->roller->Set(power);
+    this->roller->Set(power);
 }
 
 void Intake::SetLift(double power)
 {
-  this->lift->Set(power);
+    this->lift->Set(power);
 }

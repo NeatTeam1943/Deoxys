@@ -11,8 +11,9 @@
 using namespace frc;
 #include <frc/WPILib.h>
 
-class VelocityOutput : public PIDOutput {
- public:
-  VelocityOutput();
-  void PIDWrite(double output);
+class VelocityOutput : public PIDOutput
+{
+  public:
+    VelocityOutput();
+    void PIDWrite(double output);
 };

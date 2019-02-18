@@ -12,15 +12,17 @@
 using namespace frc;
 #include <frc/WPILib.h>
 #include "RobotMap.h"
-
+#include "ctre/Phoenix.h"
 #include "../commands/Intake/Lift.h"
+#include "../commands/Intake/LiftByJoystick.h"
 
-class Intake : public frc::Subsystem {
+class Intake : public frc::Subsystem
+{
   private:
     // It's desirable that everything possible under private except
     // for methods that implement subsystem capabilities
-    VictorSP* roller; // Might change to Talon SRX
-    VictorSP* lift;
+    WPI_TalonSRX *roller; // Might change to Talon SRX
+    WPI_TalonSRX *lift;
 
   public:
     Intake();

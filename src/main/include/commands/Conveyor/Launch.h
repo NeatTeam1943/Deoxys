@@ -17,7 +17,8 @@
     (double) power -> power given to BOTH launchers, in order to eject Cargo.
 */
 
-class Launch : public frc::Command {
+class Launch : public frc::Command
+{
   private:
     double power;
 

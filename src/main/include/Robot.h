@@ -15,33 +15,45 @@
 #include "subsystems/Chassis.h"
 #include "subsystems/Intake.h"
 #include "subsystems/Conveyor.h"
+#include "subsystems/Camera.h"
+#include "subsystems/Climber.h"
+#include "subsystems/Vision.h"
 
 class OI;
 class Chassis;
 class Intake;
 class Conveyor;
+class Camera;
+class Climber;
+class Vision;
 
-class Robot : public frc::TimedRobot {
- public:
-  static OI m_oi;
-  static Chassis m_chassis;
-  static Intake m_intake;
-  static Conveyor m_conveyor;
-  double cur_distance;
+class Robot : public frc::TimedRobot
+{
+  public:
+    static OI m_oi;
+    static Chassis m_chassis;
+    static Intake m_intake;
+    static Conveyor m_conveyor;
+    static Camera m_camera;
+    static Climber m_climber;
+    static Vision m_vision;
 
-  void RobotInit() override;
-  void RobotPeriodic() override;
-  void DisabledInit() override;
-  void DisabledPeriodic() override;
-  void AutonomousInit() override;
-  void AutonomousPeriodic() override;
-  void TeleopInit() override;
-  void TeleopPeriodic() override;
-  void TestPeriodic() override;
+    static std::shared_ptr<NetworkTable> table;
 
- private:
-  // Have it null by default so that if testing teleop it
-  // doesn't have undefined behavior and potentially crash.
-  frc::Command* m_autonomousCommand = nullptr;
-  frc::SendableChooser<frc::Command*> m_chooser;
+    void RobotInit() override;
+    void RobotPeriodic() override;
+    void DisabledInit() override;
+    void DisabledPeriodic() override;
+    void AutonomousInit() override;
+    void AutonomousPeriodic() override;
+    void TeleopInit() override;
+    void TeleopPeriodic() override;
+    void TestPeriodic() override;
+
+  private:
+    // Have it null by default so that if testing teleop it
+    // doesn't have undefined behavior and potentially crash.
+    frc::Command *m_autonomousCommand = nullptr;
+    frc::SendableChooser<frc::Command *> m_chooser;
+    nt::NetworkTableInstance instance;
 };

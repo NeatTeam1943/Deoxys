@@ -22,7 +22,8 @@
 */
 
 using namespace std;
-class DriveStraight : public frc::Command {
+class DriveStraight : public frc::Command
+{
   public:
     DriveStraight(double mag);
     void Initialize() override;

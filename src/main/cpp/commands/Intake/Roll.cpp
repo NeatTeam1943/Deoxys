@@ -7,33 +7,38 @@
 
 #include "commands/Intake/Roll.h"
 
-Roll::Roll(double power) {
-  // Use Requires() here to declare subsystem dependencies
-  // eg. Requires(Robot::chassis.get());
-  Requires(&Robot::m_intake);
-  this->power = power;
+Roll::Roll(double power)
+{
+    // Use Requires() here to declare subsystem dependencies
+    // eg. Requires(Robot::chassis.get());
+    Requires(&Robot::m_intake);
+    this->power = power;
 }
 
 // Called just before this Command runs the first time
-void Roll::Initialize() {
-  Robot::m_intake.SetRoller(0);
+void Roll::Initialize()
+{
+    Robot::m_intake.SetRoller(0);
 }
 
 // Called repeatedly when this Command is scheduled to run
-void Roll::Execute() {
-  Robot::m_intake.SetRoller(this->power);
+void Roll::Execute()
+{
+    Robot::m_intake.SetRoller(this->power);
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool Roll::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void Roll::End() {
+void Roll::End()
+{
     Robot::m_intake.SetRoller(0);
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void Roll::Interrupted() {
-  End();
+void Roll::Interrupted()
+{
+    End();
 }
