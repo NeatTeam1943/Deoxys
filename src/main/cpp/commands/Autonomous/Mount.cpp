@@ -21,8 +21,8 @@ Mount::Mount()
     AddParallel(new Drive(0.5, 0, false));
 
     // Open piston.
-    AddSequential(new Climb(), 2);
+    //AddSequential(new Climb(), 2);
     AddSequential(new Drive(0.5, 0, false), 2);
-    AddSequential(new Climb(), 2);
+    //AddSequential(new Climb(), 2);
     AddSequential(new Drive(0.5, 0, false), 2);
 }

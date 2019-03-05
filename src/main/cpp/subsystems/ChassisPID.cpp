@@ -1,21 +1,26 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.Gigi was here.                       */
+/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "subsystems/Chassis.h"
+#include "subsystems/ChassisPID.h"
+
 #include "RobotMap.h"
 
-#include <math.h>
 #include <frc/livewindow/LiveWindow.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
 #define CLIP(value) ((value <= 0.1 && value >= -0.1) ? 0 : value)
 
-Chassis::Chassis() : Subsystem("ExampleSubsystem")
+ChassisPID::ChassisPID()
+    : PIDSubsystem("ChassisPID", 1.0, 0.0, 0.0)
 {
+    // Use these to get going:
+    // SetSetpoint() -  Sets where the PID controller should move the system
+    //                  to
+    // Enable() - Enables the PID controller.
     // Define Chassis
     this->right_front = new WPI_TalonSRX(CHASSIS_RIGHT_FRONT);
     this->right_rear = new WPI_TalonSRX(CHASSIS_RIGHT_REAR);
@@ -42,23 +47,24 @@ Chassis::Chassis() : Subsystem("ExampleSubsystem")
     this->anglePID->SetContinuous(true);
 
     this->angle = 0;
-
-    // Temporary
-    this->forwardLimitSwitch = new DigitalInput(0);
 }
 
-bool Chassis::GetSwitchPressed()
+double ChassisPID::ReturnPIDInput()
 {
-    /*
-    temporary, used to get value of switch.
-
-    Returns (bool) - is Switch pressed.
-  */
-
-    return this->forwardLimitSwitch->Get();
+    // Return your input value for the PID loop
+    // e.g. a sensor, like a potentiometer:
+    // yourPot->SetAverageVoltage() / kYourMaxVoltage;
+    return this->GetNavx()->GetYaw();
 }
 
-void Chassis::InitDefaultCommand()
+void ChassisPID::UsePIDOutput(double output)
+{
+    // Use output to drive your system, like a motor
+    // e.g. yourMotor->Set(output);
+    this->Drive(0, output, false);
+}
+
+void ChassisPID::InitDefaultCommand()
 {
     /*
     Sets DriveByJoystick() as default command.
@@ -69,7 +75,7 @@ void Chassis::InitDefaultCommand()
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
 
-void Chassis::Drive(double mag, double rot, bool squared)
+void ChassisPID::Drive(double mag, double rot, bool squared)
 {
     /*
     See also "Drive.h".
@@ -77,7 +83,7 @@ void Chassis::Drive(double mag, double rot, bool squared)
     this->drive->ArcadeDrive(mag, rot, squared);
 }
 
-void Chassis::Drive(Joystick *stick)
+void ChassisPID::Drive(Joystick *stick)
 {
     /*
     See also "DriveByJoystick.h".
@@ -85,7 +91,7 @@ void Chassis::Drive(Joystick *stick)
     this->drive->ArcadeDrive(CLIP(stick->GetY()), CLIP(stick->GetX()), true); //!stick->GetRawButton(BTN_L_STICK)); // Solves Rotfus' issue
 }
 
-AHRS *Chassis::GetNavx()
+AHRS *ChassisPID::GetNavx()
 {
     /*
     Returns (AHRS*) NavX.
@@ -93,7 +99,7 @@ AHRS *Chassis::GetNavx()
     return this->navx;
 }
 
-PIDController *Chassis::GetAnglePID()
+PIDController *ChassisPID::GetAnglePID()
 {
     /*
     Returns (PIDController*) Angle PID Controller.
@@ -101,7 +107,7 @@ PIDController *Chassis::GetAnglePID()
     return this->anglePID;
 }
 
-double Chassis::GetNavxAngle()
+double ChassisPID::GetNavxAngle()
 {
     /*
     Returns (double) navX's current yaw.
@@ -109,7 +115,7 @@ double Chassis::GetNavxAngle()
     return this->navx->GetYaw();
 }
 
-void Chassis::SetAngleOutput(double angle)
+void ChassisPID::SetAngleOutput(double angle)
 {
     /*
     Sets Angle PID output.
@@ -119,7 +125,7 @@ void Chassis::SetAngleOutput(double angle)
     this->angle = angle;
 }
 
-double Chassis::GetAngleOutput()
+double ChassisPID::GetAngleOutput()
 {
     /*
     Gets Angle PID output.
@@ -127,56 +133,4 @@ double Chassis::GetAngleOutput()
     Returns (double) angle.
   */
     return this->angle;
-}
-
-PIDController *Chassis::GetAnglePIDMode(int mode)
-{
-    /*
-    Sets PID values of angle loop, based on 3 existing modes:
-    * mode 2 - difference of MAX 2 degrees between PID target and cur real angle.
-    * mode 5 - 2 < difference <= 5
-    * mode 20 - difference > 5
-
-    (int) mode -> PID mode (2/5/20)
-
-    Returns (PIDController*) with correct values.
-  */
-
-    if (mode == 20)
-        return new PIDController(0.013, 0, 0.02, 0, this->angle_source, this->angle_output, 0.02);
-
-    else if (mode == 5)
-        return new PIDController(0.04, 0, 0.025, 0, this->angle_source, this->angle_output, 0.02);
-
-    else if (mode == 2)
-        return new PIDController(0.065, 0, 0.0388, 0, this->angle_source, this->angle_output, 0.02);
-
-    return new PIDController(0, 0, 0, 0, this->angle_source, this->angle_output, 0.02);
-}
-
-void Chassis::SetAnglePIDMode(int mode)
-{
-    /*
-    Changes Angle PID Modes. See also "Chassis::GetAnglePIDMode".
-
-    (int) mode -> PID mode (2/5/20)
-    */
-
-    if (mode == 20)
-    {
-        Robot::m_chassis.GetAnglePID()->SetP(0.013);
-        Robot::m_chassis.GetAnglePID()->SetD(0.02);
-    }
-
-    else if (mode == 5)
-    {
-        Robot::m_chassis.GetAnglePID()->SetP(0.04);
-        Robot::m_chassis.GetAnglePID()->SetD(0.025);
-    }
-
-    else if (mode == 2)
-    {
-        Robot::m_chassis.GetAnglePID()->SetP(0.065);
-        Robot::m_chassis.GetAnglePID()->SetD(0.0388);
-    }
 }

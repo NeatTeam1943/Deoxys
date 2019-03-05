@@ -19,18 +19,20 @@ OI::OI()
         this->buttons[i] = new JoystickButton(this->stick, i + 1);
 
     // Buttons
-    //this->buttons[BTN_X]->WhileHeld(new DriveStraight(1));
-
     this->buttons[BTN_B]->WhileHeld(new Launch(-1));
-    this->buttons[BTN_A]->WhileHeld(new Launch(-0.25));
+    this->buttons[BTN_BUMPER_R]->WhileHeld(new Launch(-0.25));
     this->buttons[BTN_X]->WhileHeld(new Launch(0.2));
 
-    this->buttons[BTN_BUMPER_R]->WhileHeld(new Load());
+    this->buttons[BTN_A]->WhileHeld(new Load());
     this->buttons[BTN_BUMPER_L]->WhileHeld(new Roll(0.4));
     //this->buttons[BTN_BUMPER_L]->WhileHeld(new Roll(-0.4));
 
-    this->buttons[BTN_START]->WhenPressed(new Climb());
+    //this->buttons[BTN_START]->WhenPressed(new Climb());
     this->buttons[BTN_SELECT]->WhenPressed(new ChangeCompressor());
+    this->buttons[BTN_Y]->WhileHeld(new DriveSlow());
+    this->buttons[BTN_START]->WhenPressed(new ChangeMode());
+
+    //this->buttons[BTN_A]->WhenPressed(new DriveByVision(1.4));
 
     //this->buttons[BTN_Y]->WhileHeld(new DriveStraight(-0.35));
 

@@ -18,6 +18,7 @@
 #include "subsystems/Camera.h"
 #include "subsystems/Climber.h"
 #include "subsystems/Vision.h"
+#include "subsystems/ChassisPID.h"
 
 class OI;
 class Chassis;
@@ -26,6 +27,7 @@ class Conveyor;
 class Camera;
 class Climber;
 class Vision;
+class ChassisPID;
 
 class Robot : public frc::TimedRobot
 {
@@ -37,6 +39,7 @@ class Robot : public frc::TimedRobot
     static Camera m_camera;
     static Climber m_climber;
     static Vision m_vision;
+    static ChassisPID m_chassisPID;
 
     static std::shared_ptr<NetworkTable> table;
 

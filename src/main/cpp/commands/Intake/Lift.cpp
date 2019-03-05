@@ -11,7 +11,7 @@ Lift::Lift(double power)
 {
     // Use Requires() here to declare subsystem dependencies
     // eg. Requires(Robot::chassis.get());
-    Requires(&Robot::m_intake);
+    //Requires(&Robot::m_intake);
 
     // As Lift() runs all the time, there's no need for Requires().
     this->power = power;

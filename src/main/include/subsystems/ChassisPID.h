@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include <frc/commands/Subsystem.h>
+#include <frc/commands/PIDSubsystem.h>
 
 using namespace frc;
 #include <frc/WPILib.h> // must come after another include
@@ -19,33 +19,9 @@ using namespace frc;
 #include "PID/AngleOutput.h"
 #include "PID/AngleSource.h"
 
-/*
-    For functions' documentation, see also "Chassis.cpp".
-
-    (TalonSRX*)             right_front
-                            right_rear
-                            left_front
-                            left_rear
-    (SpeedControllerGroup*) right
-                            left
-    (DifferentialDrive*)    drive           -> You do know what they do, right?
-    (AHRS*)                 navx            -> An almost-perfect gyro, and a pretty-awful accelerometer.
-    
-    (PIDController*)        anglePID
-                            velocityPID     -> PID Controllers for 2 parameters (note that velocity might change to accel.)
-    (PIDSource*)            angle_source
-                            velocity_source -> Source for PID input.
-    (PIDOutput*)            angle_output
-                            velocity_output -> Destination for PID output.
-    (double)                angle
-                            velocity        -> Keeps the cur value, controlled by PID Loop.
-*/
-
-class Chassis : public frc::Subsystem
+class ChassisPID : public frc::PIDSubsystem
 {
   private:
-    // It's desirable that everything possible under private except
-    // for methods that implement subsystem capabilities
     WPI_TalonSRX *right_front;
     WPI_TalonSRX *right_rear;
     WPI_TalonSRX *left_front;
@@ -61,24 +37,18 @@ class Chassis : public frc::Subsystem
     PIDOutput *angle_output;
     double angle;
 
-    // temporary
-    DigitalInput *forwardLimitSwitch;
-
   public:
-    Chassis();
+    ChassisPID();
     void InitDefaultCommand() override;
     void Drive(double mag, double rot, bool squared);
     void Drive(Joystick *stick);
-
+    double ReturnPIDInput();
+    void UsePIDOutput(double output);
     AHRS *GetNavx();
-
     double GetNavxAngle();
     void SetAngleOutput(double angle);
     double GetAngleOutput();
     PIDController *GetAnglePIDMode(int mode);
     void SetAnglePIDMode(int mode);
     PIDController *GetAnglePID();
-
-    // temp
-    bool GetSwitchPressed();
 };

@@ -25,8 +25,8 @@ void Camera::MoveCamera()
     double ver = -Robot::m_oi.GetStick()->GetRawAxis(AXIS_RIGHT_Y);
     double hor = Robot::m_oi.GetStick()->GetRawAxis(AXIS_RIGHT_X);
 
-    this->horizontal->SetAngle(horizontal_middle + (hor * horizontal_middle));
-    this->vertical->SetAngle(vertical_middle + (ver * vertical_middle));
+    this->horizontal->SetAngle(horizontal_middle + (hor * horizontal_middle) - 4);
+    this->vertical->SetAngle(vertical_middle + (ver * vertical_middle) - 4);
 }
 // Put methods for controlling this subsystem
 // here. Call these from Commands.

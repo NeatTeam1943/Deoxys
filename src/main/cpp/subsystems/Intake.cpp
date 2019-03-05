@@ -11,6 +11,8 @@ Intake::Intake() : Subsystem("ExampleSubsystem")
 {
     this->roller = new WPI_TalonSRX(INTAKE_ROLLER);
     this->lift = new WPI_TalonSRX(INTAKE_LIFT);
+    this->counter = new Counter(new DigitalInput(INTAKE_COUNTER));
+    this->counter->Reset();
 }
 
 void Intake::InitDefaultCommand()
@@ -30,4 +32,9 @@ void Intake::SetRoller(double power)
 void Intake::SetLift(double power)
 {
     this->lift->Set(power);
+}
+
+Counter *Intake::GetCounter()
+{
+    return this->counter;
 }

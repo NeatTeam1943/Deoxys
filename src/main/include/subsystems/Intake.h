@@ -23,10 +23,12 @@ class Intake : public frc::Subsystem
     // for methods that implement subsystem capabilities
     WPI_TalonSRX *roller; // Might change to Talon SRX
     WPI_TalonSRX *lift;
+    Counter *counter;
 
   public:
     Intake();
     void InitDefaultCommand() override;
     void SetRoller(double power);
     void SetLift(double power);
+    Counter *GetCounter();
 };

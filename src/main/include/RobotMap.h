@@ -29,9 +29,11 @@
 // PCM Ports
 #define OPEN_PISTON 1
 #define CLOSE_PISTON 0
+#define SAVER 4
 
 // DIO Ports
 #define LOADING_SWITCH 1
+#define INTAKE_COUNTER 2
 
 // Joystick Buttons Ports
 #define BTN_A 0 // Outtake

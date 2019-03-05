@@ -16,8 +16,9 @@ ResetNavX::ResetNavX()
 // Called just before this Command runs the first time
 void ResetNavX::Initialize()
 {
-    Robot::m_chassis.GetNavx()->ResetDisplacement();
-    Robot::m_chassis.GetNavx()->ZeroYaw();
+    Robot::m_chassisPID.GetNavx()->ResetDisplacement();
+    Robot::m_chassisPID.GetNavx()->ZeroYaw();
+    Robot::m_intake.GetCounter()->Reset();
 }
 
 // Called repeatedly when this Command is scheduled to run

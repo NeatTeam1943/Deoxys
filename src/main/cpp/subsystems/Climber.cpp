@@ -10,11 +10,13 @@
 Climber::Climber() : Subsystem("ExampleSubsystem")
 {
     this->comp = new Compressor(0);
-    this->comp->SetClosedLoopControl(false);
+    this->comp->SetClosedLoopControl(true);
     this->ds = new DoubleSolenoid(OPEN_PISTON, CLOSE_PISTON);
+    this->saver = new Solenoid(SAVER);
     this->ds->Set(frc::DoubleSolenoid::Value::kOff);
-    this->is_open = false;
-    this->is_enabled = false;
+    this->saver->Set(false);
+    this->mode = 0;
+    this->is_enabled = true;
 }
 
 void Climber::InitDefaultCommand()
@@ -22,38 +24,58 @@ void Climber::InitDefaultCommand()
     // No init default command for now.
 }
 
-// Put methods for controlling this subsystem
-// here. Call these from Commands.
-
-void Climber::ChangeState()
+int Climber::GetMode()
 {
-    /*
-    Changes the state of the piston.
-    */
+    return this->mode;
+}
 
-    if (is_open)
-        this->ds->Set(DoubleSolenoid::Value::kForward);
+void Climber::NextMode()
+{
+    this->mode = (this->mode + 1) % 3;
+    if (this->mode == 0)
+    {
+        this->SetSaverMode(false);
+        this->SetDoubleMode(frc::DoubleSolenoid::Value::kOff);
+    }
+    else if (this->mode == 1)
+    {
+        this->SetSaverMode(true);
+        this->SetDoubleMode(frc::DoubleSolenoid::Value::kForward);
+    }
     else
-        this->ds->Set(DoubleSolenoid::Value::kReverse);
-    this->is_open = !this->is_open;
+    {
+        this->SetSaverMode(true);
+        this->SetDoubleMode(frc::DoubleSolenoid::Value::kReverse);
+    }
 }
 
-bool Climber::GetIsOpen()
+frc::DoubleSolenoid::Value Climber::GetDoubleMode()
 {
-    return this->is_open;
+    return this->ds->Get();
 }
 
-void Climber::Close()
+void Climber::SetDoubleMode(frc::DoubleSolenoid::Value mode)
 {
-    /*
-    Sets piston's state to off.
-    */
+    this->ds->Set(mode);
+}
 
-    this->ds->Set(DoubleSolenoid::Value::kOff);
+bool Climber::GetSaverMode()
+{
+    return this->saver->Get();
+}
+
+void Climber::SetSaverMode(bool mode)
+{
+    this->saver->Set(mode);
 }
 
 void Climber::ChangeCompressor()
 {
     this->comp->SetClosedLoopControl(!this->is_enabled);
     this->is_enabled = !this->is_enabled;
+}
+
+bool Climber::GetEnabled()
+{
+    return this->is_enabled;
 }

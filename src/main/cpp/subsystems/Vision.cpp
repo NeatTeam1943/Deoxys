@@ -13,7 +13,7 @@ Vision::Vision() : Subsystem("ExampleSubsystem")
     this->angle_source = new VisionAngleSource();
     this->angle_output = new VisionAngleOutput();
 
-    this->anglePID = Robot::m_vision.GetAnglePIDMode(20);
+    this->anglePID = Robot::m_vision.GetAnglePIDMode(5);
 
     this->anglePID->SetInputRange(-180, 180);
     this->anglePID->SetOutputRange(-1, 1);
@@ -91,13 +91,13 @@ PIDController *Vision::GetAnglePIDMode(int mode)
   */
 
     if (mode == 20)
-        return new PIDController(0.013, 0, 0.02, 0, this->angle_source, this->angle_output, 0.02);
+        return new PIDController(0.0139, 0, 0.019, 0, this->angle_source, this->angle_output, 0.02);
 
     else if (mode == 5)
-        return new PIDController(0.04, 0, 0.025, 0, this->angle_source, this->angle_output, 0.02);
+        return new PIDController(0.045, 0, 0.026, 0, this->angle_source, this->angle_output, 0.02);
 
     else if (mode == 2)
-        return new PIDController(0.065, 0, 0.0388, 0, this->angle_source, this->angle_output, 0.02);
+        return new PIDController(0.0918, 0, 0.052, 0, this->angle_source, this->angle_output, 0.02);
 
     return new PIDController(0, 0, 0, 0, this->angle_source, this->angle_output, 0.02);
 }
@@ -112,19 +112,19 @@ void Vision::SetAnglePIDMode(int mode)
 
     if (mode == 20)
     {
-        Robot::m_chassis.GetAnglePID()->SetP(0.013);
-        Robot::m_chassis.GetAnglePID()->SetD(0.02);
+        Robot::m_chassis.GetAnglePID()->SetP(0.0139);
+        Robot::m_chassis.GetAnglePID()->SetD(0.019);
     }
 
     else if (mode == 5)
     {
-        Robot::m_chassis.GetAnglePID()->SetP(0.04);
-        Robot::m_chassis.GetAnglePID()->SetD(0.025);
+        Robot::m_chassis.GetAnglePID()->SetP(0.045);
+        Robot::m_chassis.GetAnglePID()->SetD(0.026);
     }
 
     else if (mode == 2)
     {
-        Robot::m_chassis.GetAnglePID()->SetP(0.065);
-        Robot::m_chassis.GetAnglePID()->SetD(0.0388);
+        Robot::m_chassis.GetAnglePID()->SetP(0.0918);
+        Robot::m_chassis.GetAnglePID()->SetD(0.052);
     }
 }

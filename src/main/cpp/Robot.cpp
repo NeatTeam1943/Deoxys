@@ -12,6 +12,7 @@
 
 OI Robot::m_oi;
 Chassis Robot::m_chassis;
+ChassisPID Robot::m_chassisPID;
 Intake Robot::m_intake;
 Conveyor Robot::m_conveyor;
 Camera Robot::m_camera;
@@ -42,13 +43,12 @@ void Robot::RobotInit()
  */
 void Robot::RobotPeriodic()
 {
-    frc::SmartDashboard::PutNumber("Yaw", Robot::m_chassis.GetNavx()->GetYaw());
     //frc::SmartDashboard::PutNumber("Distance_vision", Robot::m_vision.GetDistance());
     //frc::SmartDashboard::PutNumber("Alpha_vision", Robot::m_vision.GetAlpha());
     frc::SmartDashboard::PutBoolean("Is loaded", Robot::m_conveyor.IsLoaded());
-    frc::SmartDashboard::PutNumber("Vertical", Robot::m_camera.GetVertical());
-    frc::SmartDashboard::PutNumber("Horizontal", Robot::m_camera.GetHorizotal());
-    //cout << Robot::m_conveyor.IsLoaded() << endl;
+    frc::SmartDashboard::PutNumber("Distance", Robot::m_vision.GetDistance());
+    frc::SmartDashboard::PutNumber("Alpha", Robot::m_vision.GetAlpha());
+    frc::SmartDashboard::PutBoolean("Compressor", Robot::m_climber.GetEnabled());
     //cout << table->GetEntry("alpha").GetDouble(0) << endl;
 }
 

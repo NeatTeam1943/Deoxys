@@ -27,14 +27,19 @@ class Climber : public frc::Subsystem
     // for methods that implement subsystem capabilities
     Compressor *comp;
     DoubleSolenoid *ds;
-    bool is_open;
+    Solenoid *saver;
     bool is_enabled;
+    int mode;
 
   public:
     Climber();
-    void ChangeState();
-    void Close();
-    void ChangeCompressor();
     void InitDefaultCommand() override;
-    bool GetIsOpen();
+    int GetMode();
+    void NextMode();
+    frc::DoubleSolenoid::Value GetDoubleMode();
+    void SetDoubleMode(frc::DoubleSolenoid::Value mode);
+    bool GetSaverMode();
+    void SetSaverMode(bool mode);
+    void ChangeCompressor();
+    bool GetEnabled();
 };

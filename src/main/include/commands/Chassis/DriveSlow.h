@@ -7,12 +7,21 @@
 
 #pragma once
 
-#include <frc/commands/CommandGroup.h>
-#include "../../commands/Intake/Lift.h"
-#include "../../commands/Chassis/Drive.h"
+#include <frc/commands/Command.h>
+#include "../../Robot.h"
 
-class Mount : public frc::CommandGroup
+class DriveSlow : public frc::Command
 {
+  private:
+    Joystick *stick;
+    double x;
+    double y;
+
   public:
-    Mount();
+    DriveSlow();
+    void Initialize() override;
+    void Execute() override;
+    bool IsFinished() override;
+    void End() override;
+    void Interrupted() override;
 };

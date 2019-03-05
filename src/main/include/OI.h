@@ -20,11 +20,13 @@ using namespace frc;
 #include "commands/Intake/Lift.h"
 #include "commands/Intake/Roll.h"
 #include "commands/Conveyor/Launch.h"
-#include "commands/Climber/Climb.h"
 #include "commands/Vision/GetData.h"
 #include "commands/Autonomous/Rotate.h"
 #include "commands/Autonomous/Load.h"
 #include "commands/Climber/ChangeCompressor.h"
+#include "commands/Chassis/DriveSlow.h"
+#include "commands/Climber/ChangeMode.h"
+#include "commands/Autonomous/DriveByVision.h"
 
 class OI
 {

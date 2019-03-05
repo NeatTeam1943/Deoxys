@@ -5,43 +5,44 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/Chassis/DriveStraight.h"
+#include "commands/Chassis/DriveSlow.h"
 
-DriveStraight::DriveStraight(double mag)
+DriveSlow::DriveSlow()
 {
     // Use Requires() here to declare subsystem dependencies
     // eg. Requires(Robot::chassis.get());
     Requires(&Robot::m_chassis);
-    this->mag = mag;
+    this->stick = Robot::m_oi.GetStick();
+    this->x = 0;
+    this->y = 0;
 }
 
 // Called just before this Command runs the first time
-void DriveStraight::Initialize()
+void DriveSlow::Initialize()
 {
-    Robot::m_chassis.GetNavx()->ZeroYaw();
-    Robot::m_chassis.GetAnglePID()->SetSetpoint(0);
-    Robot::m_chassis.GetAnglePID()->Enable();
+    Robot::m_chassis.Drive(0, 0, false);
 }
 
 // Called repeatedly when this Command is scheduled to run
-void DriveStraight::Execute()
+void DriveSlow::Execute()
 {
-    Robot::m_chassis.Drive(0.3, Robot::m_chassis.GetAngleOutput(), false);
+    this->x = this->stick->GetX();
+    this->y = this->stick->GetY();
+    Robot::m_chassis.Drive(this->y * 0.35, this->x * 0.35, false);
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool DriveStraight::IsFinished() { return false; }
+bool DriveSlow::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void DriveStraight::End()
+void DriveSlow::End()
 {
-    Robot::m_chassis.GetAnglePID()->Disable();
-    cout << "Drive straight over." << endl;
+    Robot::m_chassis.Drive(0, 0, false);
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void DriveStraight::Interrupted()
+void DriveSlow::Interrupted()
 {
     End();
 }

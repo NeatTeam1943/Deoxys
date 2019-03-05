@@ -9,6 +9,7 @@
 
 Shoot::Shoot()
 {
+
     //AddSequential(new DriveByVision(DISTANCE));
     //AddSequential(new Launch(-1), TIME_FOR_LAUNCH);
 
